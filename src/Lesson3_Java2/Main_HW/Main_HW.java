@@ -1,6 +1,7 @@
 package Lesson3_Java2.Main_HW;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class Main_HW {
     public static void main(String[] args) {
@@ -10,7 +11,10 @@ public class Main_HW {
         createList(arr);
 
         ArrayList<Human> listHuman = new ArrayList<>();
-        HashMap <String,Integer> phoneBook = new HashMap<>();
+
+        HashSet<Integer> listPhone = new HashSet<>();
+
+        HashMap <String,HashSet> phoneBook = new HashMap<>();
 
         Human [] arrHuman = new Human[3];
 
@@ -22,7 +26,6 @@ public class Main_HW {
 
             listHuman.add(arrHuman[i]);
         }
-
 
         phoneBook = add("Иван",921,listHuman,phoneBook);
 
@@ -64,26 +67,26 @@ static class Human{
         System.out.println(hashMap);
     }
 
-    public static  HashMap <String,Integer>  add(String name,int phone,ArrayList<Human> listHuman,HashMap <String,Integer> phoneBook){
+    public static  HashMap <String,Integer>  add(String name,int phone,ArrayList<Human> listHuman,HashMap <String,HashSet> phoneBook){
 
         Human human = new Human(name,phone);
 
 
         listHuman.add(human);
 
-         phoneBook = setPhone(listHuman,human,phoneBook);
+         phoneBook = setPhone(listHuman,phoneBook);
 
         return phoneBook;
 
     }
 
 
-    public static HashMap <String,Integer> setPhone(ArrayList<Human> listHuman,Human human,HashMap <String,Integer> phoneBook){
+    public static HashMap <String,Integer> setPhone(ArrayList<Human> listHuman,HashMap <String,HashSet> phoneBook){
 
 
         for (int i = 0; i <listHuman.size(); i++) {
 
-            phoneBook.put(listHuman.get(i).getName(),listHuman.get(i).getPhone()); //вставляем имя и телефон пользователя
+            phoneBook.put(listHuman.get(i).getName(),HashSet); //вставляем имя и телефон пользователя
 
         }
         System.out.println("Телефонный справочник "+ phoneBook);
@@ -95,6 +98,8 @@ static class Human{
 
         Integer value = phoneBook.get(name);
         System.out.println(name+" Номер телефона: " + value);
+        phoneBook.getOrDefault("Пётр",0);
+        System.out.println(phoneBook.getOrDefault("Пётр",0));
 
     }
 }
