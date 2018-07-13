@@ -10,24 +10,26 @@ public class Main_HW {
 
         createList(arr);
 
-        ArrayList<Human> listHuman = new ArrayList<>();
 
-        HashSet<Integer> listPhone = new HashSet<>();
+
+        ArrayList<Human> listHuman = new ArrayList<>();
 
         HashMap <String,HashSet> phoneBook = new HashMap<>();
 
-        Human [] arrHuman = new Human[3];
-
-        arrHuman[0] = new Human("Пётр", 876);
-        arrHuman[1] = new Human("Василий", 323);
-        arrHuman[2] = new Human("Татьяна", 444);
-
-        for (int i = 0; i <arrHuman.length; i++) {
-
-            listHuman.add(arrHuman[i]);
-        }
+//        Human [] arrHuman = new Human[3];
+//
+//        arrHuman[0] = new Human("Пётр", 876);
+//        arrHuman[1] = new Human("Василий", 323);
+//        arrHuman[2] = new Human("Татьяна", 444);
+//
+//        for (int i = 0; i <arrHuman.length; i++) {
+//
+//            listHuman.add(arrHuman[i]);
+//            listHuman.get(i).listPhone.add(555);
+//        }
 
         phoneBook = add("Иван",921,listHuman,phoneBook);
+
 
         get("Пётр", phoneBook );
 
@@ -37,21 +39,24 @@ public class Main_HW {
     }
 static class Human{
     String name;
-    int phone;
+
+    HashSet<Integer> listPhone;
 
 
-    public Human(String name, int phone) {
+    public Human(String name, HashSet<Integer> listPhone) {
         this.name = name;
-        this.phone = phone;
+        this.listPhone = listPhone;
     }
 
     public String getName() {
         return name;
     }
 
-    public int getPhone() {
-        return phone;
+    public HashSet<Integer> getListPhone() {
+        return listPhone;
     }
+
+
 }
 
 
@@ -67,26 +72,31 @@ static class Human{
         System.out.println(hashMap);
     }
 
-    public static  HashMap <String,Integer>  add(String name,int phone,ArrayList<Human> listHuman,HashMap <String,HashSet> phoneBook){
+    public static  HashMap <String,HashSet>  add(String name,int phone,ArrayList<Human> listHuman,HashMap <String,HashSet> phoneBook){
 
-        Human human = new Human(name,phone);
+        HashSet<Integer> hashSet = new HashSet<>();
+        hashSet.add(phone);
+
+        Human human = new Human(name, hashSet);
+
+        human.listPhone.add(phone);
 
 
         listHuman.add(human);
 
-         phoneBook = setPhone(listHuman,phoneBook);
+        phoneBook = setPhone(listHuman, phoneBook);
 
         return phoneBook;
 
     }
 
 
-    public static HashMap <String,Integer> setPhone(ArrayList<Human> listHuman,HashMap <String,HashSet> phoneBook){
+    public static HashMap <String,HashSet> setPhone(ArrayList<Human> listHuman,HashMap <String,HashSet> phoneBook){
 
 
         for (int i = 0; i <listHuman.size(); i++) {
 
-            phoneBook.put(listHuman.get(i).getName(),HashSet); //вставляем имя и телефон пользователя
+            phoneBook.put(listHuman.get(i).getName(),listHuman.get(i).getListPhone()); //вставляем имя и телефон пользователя
 
         }
         System.out.println("Телефонный справочник "+ phoneBook);
@@ -94,12 +104,12 @@ static class Human{
         return phoneBook;
 
     }
-    public static void get(String name,HashMap <String,Integer> phoneBook){
+    public static void get(String name,HashMap <String,HashSet> phoneBook){
 
-        Integer value = phoneBook.get(name);
-        System.out.println(name+" Номер телефона: " + value);
-        phoneBook.getOrDefault("Пётр",0);
-        System.out.println(phoneBook.getOrDefault("Пётр",0));
+//        Integer value = phoneBook.get(name);
+//        System.out.println(name+" Номер телефона: " + value);
+//        phoneBook.getOrDefault("Пётр",0);
+//        System.out.println(phoneBook.getOrDefault("Пётр",0));
 
     }
 }
