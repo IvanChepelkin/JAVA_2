@@ -9,7 +9,7 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class  ServerMain {
-    public static void main(String[] args) {
+    public ServerMain() {
 
 
         ServerSocket server = null; //инициализируем сервер
@@ -17,22 +17,18 @@ public class  ServerMain {
         try {
             server = new ServerSocket(8189); //создаем сервер
             System.out.println("Сервер запущен!");
-            socket = server.accept();//ждём подключения клиента
-            System.out.println("Клиент подключился!");
+            while (true){
+                socket = server.accept();//ждём подключения клиента
+                System.out.println("Клиент подключился!");
+                new ClientHandler(this,socket); // создаем новых клиентов
+
+            }
+
 
 //            Scanner in = new Scanner(socket.getInputStream());//справшиваем входящий поток
 //            PrintWriter out = new PrintWriter(socket.getOutputStream(),true);//исходяший поток
-            DataInputStream in = new DataInputStream(socket.getInputStream());
-            DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-            while (true) {
-                String str = in.readUTF();//записываем
-//                System.out.println("Клиент " + str);//выводим данные от клиента
-                if (str.equals("/end")) {
-                    out.writeUTF("/serverClosed");
-                    break;
-                }
-                out.writeUTF(str);//отправляем сообщение обратно
-            }
+
+
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

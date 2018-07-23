@@ -21,7 +21,7 @@ public  class Controller implements Initializable {
 
     Socket socket;
 
-    DataInputStream in;
+    DataInputStream in = null;
     DataOutputStream out;
     final String IP = "localhost"; //create ip adress
     final int Port = 8189;//create port
