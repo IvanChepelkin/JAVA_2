@@ -1,6 +1,8 @@
 // сервер для нескольких клиентов
 package Lesson6_Java2.Server;
 
+import Lesson7_Java2.Client;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -13,7 +15,7 @@ public class ClientHandler {
     DataInputStream in;
     DataOutputStream out;
 
-    public ClientHandler(ServerMain serverMain,Socket socket){
+    public ClientHandler(ServerMain serverMain, Socket socket) {
 
         try {
             this.serverMain = serverMain;
@@ -21,25 +23,27 @@ public class ClientHandler {
             this.in = new DataInputStream(socket.getInputStream());//инициализация входящего потока
             this.out = new DataOutputStream(socket.getOutputStream());
 
+// Зачем то поменяли следущие 3 строки!!!
+//            new Thread(new Runnable() {
+//                @Override
+//                public void run() {
 
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-
+            new Thread(() -> {
                     try {
                         while (true) {
-                            String str = in.readUTF();//записываем
+                            String str = in.readUTF();// записывает в поток строку в кодировке UTF-8
 //                System.out.println("Клиент " + str);//выводим данные от клиента
                             if (str.equals("/end")) {
                                 out.writeUTF("/serverClosed");
                                 break;
                             }
+                            serverMain.broadCast(str);//отправляем сообщение все клиентам
 //                            out.writeUTF(str);//отправляем сообщение обратно
                         }
 
                     } catch (IOException e) {
                         e.printStackTrace();
-                    }finally {
+                    } finally {
                         try {
                             in.close();
                         } catch (IOException e) {
@@ -55,25 +59,24 @@ public class ClientHandler {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
+                        serverMain.unsubscribe(this);// удаляем клиента из списка
+
                     }
-                }
             }).start();
 
-
-         } catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
-
     }
-//    метод отправляет сообщения
-    public void sendMsg(String msg){
+
+    //    метод отправляет сообщения
+    public void sendMsg(String msg) {
         try {
             out.writeUTF(msg);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
 
 }
