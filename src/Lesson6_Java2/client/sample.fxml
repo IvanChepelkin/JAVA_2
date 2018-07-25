@@ -18,13 +18,13 @@
   <stylesheets><URL value="@/Lesson6_Java2/Style.css" /></stylesheets>
 
     <Pane fx:id="upperPanel">
-        <TextField fx:id="loginField" promptText="Логин" HBox.hgrow="ALWAYS" />
+        <TextField fx:id="loginField" promptText="Логин" HBox.hgrow="ALWAYS"/>
     </Pane>
-     <PasswordField fx:id="passwordField" layoutX="187.0" layoutY="-1.0" onAction="#tryToAuth" promptText="Пароль" />
-     <Button layoutX="374.0" layoutY="-1.0" onAction="#tryToAuth" text="Авторизоваться" />
+    <PasswordField fx:id="passwordField" layoutX="187.0" layoutY="-1.0" onAction="#tryToAuth" promptText="Пароль"/>
+    <Button layoutX="374.0" layoutY="-1.0" onAction="#tryToAuth" text="Авторизоваться"/>
 
 
-   <children>
+    <children>
       <Pane fx:id="pan1" layoutX="200.0" managed="false" prefHeight="600.0" prefWidth="400.0" style="-fx-background-color: #FFFFFF;" visible="false">
          <children>
             <TextArea fx:id="textArea" editable="false" prefHeight="566.0" prefWidth="400.0" style="-fx-background-color: #F8F8FF;" />

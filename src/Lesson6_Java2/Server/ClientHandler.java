@@ -44,7 +44,7 @@ public class ClientHandler {
                                 serverMain.subscribe(this); // добавляем клиента в список
                                 break; // выходим, если клиент смог авторизоваться
                             } else {
-                                System.out.println("Неверный логин или пароль!");
+                               sendMsg("Неверный логин или пароль!");
                             }
                         }
                     }
@@ -58,7 +58,7 @@ public class ClientHandler {
                             break;
                         }
                         serverMain.broadCast(str);//отправляем сообщение все клиентам
-                        System.out.println("Клиент " + str);//выводим данные от клиента
+                       // System.out.println("Клиент " + str);//выводим данные от клиента
                     }
 //
 //                            out.writeUTF(str);//отправляем сообщение обратно
