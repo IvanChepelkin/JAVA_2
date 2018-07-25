@@ -6,22 +6,24 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.Vector;
 
 public class  ServerMain {
     private Vector<ClientHandler> clients;// синхронизированный список клиентов
-    public ServerMain() {
+    public ServerMain() throws SQLException {
         clients = new Vector<>();
         ServerSocket server = null; //инициализируем сервер
         Socket socket = null;//инициализируем сокет
         try {
+            AuthService.connect(); // подключение к БД
             server = new ServerSocket(8189); //создаем сервер
             System.out.println("Сервер запущен!");
             while (true){
                 socket = server.accept();//ждём подключения клиента
                 System.out.println("Клиент подключился!");
-                subscribe(new ClientHandler(this, socket));// добавляем клиента
+                new ClientHandler(this, socket);// создаем нового клиента
 
                 // раз и добавляем их в синхронизированный список
             }
@@ -44,6 +46,7 @@ public class  ServerMain {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            AuthService.disconnect(); // закрываем БД
         }
     }
 

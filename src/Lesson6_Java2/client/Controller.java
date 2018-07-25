@@ -1,5 +1,6 @@
 package Lesson6_Java2.client;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
@@ -78,4 +79,6 @@ public  class Controller implements Initializable {
    }
 
 
+    public void tryToAuth(ActionEvent actionEvent) {
+    }
 }
