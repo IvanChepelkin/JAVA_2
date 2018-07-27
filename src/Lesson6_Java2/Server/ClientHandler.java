@@ -35,7 +35,7 @@ public class ClientHandler {
                     while (true) {
                         String str = in.readUTF();// записывает в поток строку в кодировке UTF-8
                         if (str.startsWith("/auth")) { // если строка начинается auth , т е это то, что нам присылает клиент
-                            String[] tokens = str.split(" "); // вторым ключом приходят ни и парол , разделяем их на слова
+                            String[] tokens = str.split(" "); // вторым ключом приходят логин и пароль , разделяем их на слова
                             String newNick = AuthService.getNickByLoginAndPass(tokens[1], tokens[2]);  // посылаем в базу данных token 1 = логин,
                             // token 2 = пароль. Возвращается ник пользователя и записывается в newNick
                             if (newNick != null) {  // если есть совпадение, аутификация прошла успешно и клиента
