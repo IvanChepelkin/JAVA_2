@@ -22,6 +22,8 @@ public  class Controller  {
     @FXML
     TextArea textArea;//указываем id из sample
     @FXML
+    TextArea textArea1;//указываем id из sample
+    @FXML
     TextField textField;
     @FXML
     TextField loginField;
@@ -84,13 +86,13 @@ public  class Controller  {
                     try {
                         // блок авторизации
                         while (true){
-                            String str = in.readUTF(); // если сервер вернул authok
+                            String str = in.readUTF(); // если сервер вернул authok,
                             if (str.equals("/authok")) {
                                 setAuthorized(true);
                                 break;
                             }
                             else {
-                                textArea.appendText(str +"/n");
+                                textArea.appendText(str +"\n");
                             }
                         }
                         while (true) { //сокет закроется, когда выйдем из цикла
@@ -99,6 +101,7 @@ public  class Controller  {
                                 break;
                             }
                             textArea.appendText(str + "\n"); //выводим строку, что пришла от сервера
+                            //textArea1.appendText(str + "/n"); //выводим строку, что пришла от сервера
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -134,7 +137,7 @@ public  class Controller  {
 
    }
 
-
+// метод оправляет auth + логин + пароль на проверку в ClientHandler
     public void tryToAuth(ActionEvent actionEvent) {
         if(socket ==null || socket.isClosed()){ // если сокет закрыт
             connect(); // dspsdftv метод коннект

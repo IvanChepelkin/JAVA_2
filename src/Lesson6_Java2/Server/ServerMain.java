@@ -64,4 +64,27 @@ public class  ServerMain {
             o.sendMsg(msg);
         }
     }
+    // метод проверяет есть ли ник в списке авторизованных клиентов
+    public boolean isNick(String nick){
+
+        for (ClientHandler o:clients) {
+            if (o.getNick().equalsIgnoreCase(nick)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // метод оправки личного сообщения
+    // на вход принимает От кого, кому и само сообщение
+    public void sendPersonalMsg(ClientHandler from, String nickTo, String msg){
+        for (ClientHandler o:clients) {
+            if (o.getNick().equalsIgnoreCase(nickTo)){// ищем клиента в нашем списке
+                o.sendMsg("from " + from.getNick() +": "+ msg); // отправляем сообщение
+            }
+            from.sendMsg("to " + nickTo +": "+ msg);
+            return; // выходим
+        }
+        from.sendMsg("Клиент с ником " + nickTo+" не найден!");
+    }
 }

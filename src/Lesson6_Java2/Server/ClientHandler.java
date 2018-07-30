@@ -16,6 +16,10 @@ public class ClientHandler {
     private DataOutputStream out;
     private String nick;
 
+    public String getNick() {
+        return nick;
+    }
+
     public ClientHandler(ServerMain serverMain, Socket socket) {
 
         try {
@@ -34,17 +38,21 @@ public class ClientHandler {
                     // цикл, чтоб авторизоваться
                     while (true) {
                         String str = in.readUTF();// записывает в поток строку в кодировке UTF-8
-                        if (str.startsWith("/auth")) { // если строка начинается auth , т е это то, что нам присылает клиент
+                        if (str.startsWith("/auth")) { // если строка начинается auth , згачит это идут логин с паролем
                             String[] tokens = str.split(" "); // вторым ключом приходят логин и пароль , разделяем их на слова
                             String newNick = AuthService.getNickByLoginAndPass(tokens[1], tokens[2]);  // посылаем в базу данных token 1 = логин,
                             // token 2 = пароль. Возвращается ник пользователя и записывается в newNick
                             if (newNick != null) {  // если есть совпадение, аутификация прошла успешно и клиента
-                                sendMsg("/authok"); // можно допустить до чата
-                                nick = newNick;
-                                serverMain.subscribe(this); // добавляем клиента в список
-                                break; // выходим, если клиент смог авторизоваться
+                                if (!serverMain.isNick(newNick)) { // если этого ника нет в списке авторизованных
+                                    sendMsg("/authok"); // можно допустить до чата, отправляем в контроллер /authok через сервер
+                                    nick = newNick;
+                                    serverMain.subscribe(this); // добавляем клиента в список
+                                    break; // выходим, если клиент смог авторизоваться
+                                }else {
+                                    sendMsg("Учетная запись уже используется!");
+                                }
                             } else {
-                               sendMsg("Неверный логин или пароль!");
+                                sendMsg("Неверный логин или пароль!");
                             }
                         }
                     }
@@ -52,13 +60,24 @@ public class ClientHandler {
                     // цикл для общения, передачи сообщений
                     while (true) {
                         String str = in.readUTF();// записывает в поток строку в кодировке UTF-8
+
+                        if (str.startsWith("/")) { //служебное сообщение, если что то начинается с /
 //
-                        if (str.equals("/end")) {
-                            out.writeUTF("/serverClosed");
-                            break;
+                            if (str.equals("/end")) {
+                                out.writeUTF("/serverClosed");
+                                break;
+                            }
+                            if(str.startsWith("/w")){// если /w , значит это личное сообщение
+                                String [] tokens =str.split(" ",3); //сплитываем строчку, в первой
+                                // части /w, во второй ник, а в 3 сообщение)
+                                serverMain.sendPersonalMsg(this, tokens[1],tokens[2]); // отправляем в
+                                // ServerMain от кого , кому и само сообщение
+                            }
+
+                        }else {
+                            serverMain.broadCast(nick + ": " + str);//отправляем сообщение все клиентам
+                            // System.out.println("Клиент " + str);//выводим данные от клиента
                         }
-                        serverMain.broadCast(str);//отправляем сообщение все клиентам
-                       // System.out.println("Клиент " + str);//выводим данные от клиента
                     }
 //
 //                            out.writeUTF(str);//отправляем сообщение обратно
