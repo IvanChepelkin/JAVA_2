@@ -59,9 +59,11 @@ public class  ServerMain {
         clients.remove(client);
     }
     //метод делает рассылку msg всем пользователям чата, перебирая коллекцию
-    public void broadCast(String msg){
-        for (ClientHandler o:clients) {
-            o.sendMsg(msg);
+    public void broadCast(ClientHandler from, String msg) {
+        for (ClientHandler o : clients) {
+            if (!o.chekBlackList(from.getNick())) { // если клиента нет в черном списке, отправляем ему сообщение
+                o.sendMsg(msg);
+            }
         }
     }
     // метод проверяет есть ли ник в списке авторизованных клиентов
@@ -81,9 +83,9 @@ public class  ServerMain {
         for (ClientHandler o:clients) {
             if (o.getNick().equalsIgnoreCase(nickTo)){// ищем клиента в нашем списке
                 o.sendMsg("from " + from.getNick() +": "+ msg); // отправляем сообщение
+                from.sendMsg("to " + nickTo +": "+ msg);
+                return; // выходим
             }
-            from.sendMsg("to " + nickTo +": "+ msg);
-            return; // выходим
         }
         from.sendMsg("Клиент с ником " + nickTo+" не найден!");
     }

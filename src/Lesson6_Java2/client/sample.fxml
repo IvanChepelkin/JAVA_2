@@ -20,10 +20,10 @@
     </stylesheets>
 
     <Pane fx:id="upperPanel">
-        <TextField fx:id="loginField" layoutY="-1.0" promptText="Логин" HBox.hgrow="ALWAYS" />
-        <PasswordField fx:id="passwordField" layoutX="186.0" layoutY="-1.0" onAction="#tryToAuth" promptText="Пароль" />
-        <Button layoutX="372.0" layoutY="-1.0" onAction="#tryToAuth" text="Авторизоваться" />
-        <TextArea fx:id="textArea1" editable="false" layoutY="30.0" prefHeight="31.0" prefWidth="504.0" style="-fx-background-color: #F8F8FF;" />
+        <TextField fx:id="loginField" layoutY="-1.0" prefHeight="31.0" prefWidth="233.0" promptText="Логин" HBox.hgrow="ALWAYS" />
+        <PasswordField fx:id="passwordField" layoutX="230.0" layoutY="-1.0" onAction="#tryToAuth" prefHeight="31.0" prefWidth="241.0" promptText="Пароль" />
+        <Button layoutX="470.0" layoutY="-1.0" onAction="#tryToAuth" text="Авторизоваться" />
+        <TextArea fx:id="textArea1" editable="false" layoutY="30.0" prefHeight="47.0" prefWidth="600.0" style="-fx-background-color: #F8F8FF;" />
 
     </Pane>
 

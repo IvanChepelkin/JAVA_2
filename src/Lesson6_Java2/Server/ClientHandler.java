@@ -7,6 +7,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class ClientHandler {
     private Socket socket = null;
@@ -15,6 +16,7 @@ public class ClientHandler {
     private DataInputStream in;
     private DataOutputStream out;
     private String nick;
+    private ArrayList<String> blackList;
 
     public String getNick() {
         return nick;
@@ -23,6 +25,7 @@ public class ClientHandler {
     public ClientHandler(ServerMain serverMain, Socket socket) {
 
         try {
+            this.blackList = new ArrayList<>();
             this.serverMain = serverMain;
             this.socket = socket;
             this.in = new DataInputStream(socket.getInputStream());//инициализация входящего потока
@@ -59,7 +62,7 @@ public class ClientHandler {
 
                     // цикл для общения, передачи сообщений
                     while (true) {
-                        String str = in.readUTF();// записывает в поток строку в кодировке UTF-8
+                         String str = in.readUTF();// записывает в поток строку в кодировке UTF-8
 
                         if (str.startsWith("/")) { //служебное сообщение, если что то начинается с /
 //
@@ -73,9 +76,14 @@ public class ClientHandler {
                                 serverMain.sendPersonalMsg(this, tokens[1],tokens[2]); // отправляем в
                                 // ServerMain от кого , кому и само сообщение
                             }
+                            if(str.startsWith("/blacklist")){// отправка в черный список
+                                String [] tokens =str.split(" ");
+                                blackList.add(tokens[1]); // добавляем ник в черный список
+                                sendMsg("Вы добавили пользователя "+" в чёрный список!");
+                            }
 
                         }else {
-                            serverMain.broadCast(nick + ": " + str);//отправляем сообщение все клиентам
+                            serverMain.broadCast(this, nick + ": " + str);//отправляем сообщение все клиентам
                             // System.out.println("Клиент " + str);//выводим данные от клиента
                         }
                     }
@@ -107,7 +115,10 @@ public class ClientHandler {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+    }
+    // метод возвращает есть ли этот ник в черном списке
+    public boolean chekBlackList(String nick){
+        return blackList.contains(nick); //contains - содержит ли список данный ник
     }
 
     //    метод отправляет сообщения
@@ -118,5 +129,4 @@ public class ClientHandler {
             e.printStackTrace();
         }
     }
-
 }
