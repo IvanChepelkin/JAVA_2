@@ -21,7 +21,10 @@ public class AuthService {
 //    WHERE login = 'login1'
 //    AND password = 'pass1'
 
-//
+// Метод добавления новых пользователей
+    public static void addUser (String login, String pass, String nick){
+
+    }
     public static String getNickByLoginAndPass(String login, String pass){
 String sql = String.format("SELECT nickname FROM main\n"+
         "WHERE login = '%s'\n"+

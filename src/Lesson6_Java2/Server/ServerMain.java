@@ -53,10 +53,12 @@ public class  ServerMain {
 //событие добавляет клиента в список
     public void subscribe(ClientHandler client){
         clients.add(client);
+        broadCastClientList(); // вызываем метод , который создает список клиентов
     }
     //событие удаляет  клиента из списка
     public void unsubscribe(ClientHandler client){
         clients.remove(client);
+        broadCastClientList();  // вызываем метод , который создает список клиентов
     }
     //метод делает рассылку msg всем пользователям чата, перебирая коллекцию
     public void broadCast(ClientHandler from, String msg) {
@@ -64,7 +66,7 @@ public class  ServerMain {
             if (!o.chekBlackList(from.getNick())) { // если клиента нет в черном списке, отправляем ему сообщение
                 o.sendMsg(msg);
             }
-        }
+         }
     }
     // метод проверяет есть ли ник в списке авторизованных клиентов
     public boolean isNick(String nick){
@@ -75,6 +77,18 @@ public class  ServerMain {
             }
         }
         return false;
+    }
+    // метод создает список клиентов и отправляет их в ClientHandler
+    public void broadCastClientList(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("/clientList "); // добавляем служебное сообщение
+        for (ClientHandler o:clients) {
+            sb.append(o.getNick() + " "); // добавляем ники в наш список
+        }
+        String out = sb.toString(); // перевод в строку весь набор ников , чтоб не было проблем)))
+        for (ClientHandler o:clients) {
+            o.sendMsg(out); // отправляем строку с никами каждому ClientHandler
+        }
     }
 
     // метод оправки личного сообщения

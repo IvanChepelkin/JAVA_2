@@ -5,15 +5,14 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?scenebuilder-stylisheet /Style.css?>
 
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Lesson6_Java2.client.Controller">
     <stylesheets>
         <URL value="@/Lesson6_Java2/Style.css" />
@@ -37,59 +36,7 @@
         </Pane>
         <Pane fx:id="pan2" managed="false" prefHeight="600.0" prefWidth="200.0" style="-fx-background-color: #F0FFFF #F0FFF0;" visible="false">
             <children>
-                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="20.0" pickOnBounds="true" preserveRatio="true" />
-                <TextField layoutX="8.0" layoutY="27.0" promptText="Search" style="-fx-background-color: #FFFFFF;">
-                    <font>
-                        <Font size="14.0" />
-                    </font>
-                </TextField>
-                <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="150.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../Icons/magnifying-glass.png" />
-                    </image>
-                </ImageView>
-                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="20.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../Icons/Trump_Circle.png" />
-                    </image>
-                </ImageView>
-                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="20.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../Icons/maynard-face-circle-grey.png" />
-                    </image>
-                </ImageView>
-                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="20.0" layoutY="220.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../Icons/20141226549d49b082747.png" />
-                    </image>
-                </ImageView>
-                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="20.0" layoutY="290.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../Icons/Fotka-v-kruge-iyun6.jpg" />
-                    </image>
-                </ImageView>
-                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="20.0" layoutY="370.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../Icons/circle-52.png" />
-                    </image>
-                </ImageView>
-                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="20.0" layoutY="450.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../Icons/kim_face_circle.jpeg" />
-                    </image>
-                </ImageView>
-                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="20.0" layoutY="530.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../Icons/circle4387319.png" />
-                    </image>
-                </ImageView>
-                <Label layoutX="83.0" layoutY="95.0" text="Donald" />
-                <Label layoutX="83.0" layoutY="165.0" text="Max" />
-                <Label layoutX="83.0" layoutY="235.0" text="Katrin" />
-                <Label layoutX="83.0" layoutY="305.0" text="William" />
-                <Label layoutX="83.0" layoutY="385.0" text="Jhon" />
-                <Label layoutX="83.0" layoutY="465.0" text="Nataly" />
-                <Label layoutX="83.0" layoutY="545.0" text="Sam" />
+                <ListView fx:id= "clientList" prefHeight="600.0" prefWidth="200.0"/>
             </children>
         </Pane>
     </children>

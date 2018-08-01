@@ -1,5 +1,6 @@
 package Lesson6_Java2.client;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -35,6 +36,8 @@ public  class Controller  {
     Pane pan1;
     @FXML
     Pane pan2;
+    @FXML
+    javafx.scene.control.ListView clientList;
 
     private boolean isAuthorized;
 
@@ -57,6 +60,7 @@ public  class Controller  {
 
             pan2.setVisible(false);
             pan2.setManaged(false);
+
 
         }else {
             upperPanel.setVisible(false);
@@ -100,8 +104,22 @@ public  class Controller  {
                             if (str.equals("/serverClosed")) {
                                 break;
                             }
-                            textArea.appendText(str + "\n"); //выводим строку, что пришла от сервера
-                            //textArea1.appendText(str + "/n"); //выводим строку, что пришла от сервера
+                            if (str.startsWith("/clientList")) { // если нам пришло / clientList
+                                String[] tokens = str.split(" "); // помещаем нашу строчку через сплит в массив
+                                // поток в динамике изменяет графическое представление клиентсписка
+                                Platform.runLater(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        clientList.getItems().clear(); // очищаем графический  клиентлист
+                                        for (int i = 1; i < tokens.length; i++) { // с 1 так как под нулевым индексом служебное ссобщение
+                                            clientList.getItems().add(tokens[i]); // добавляем ники клиентов на графический клиентлист
+                                        }
+                                    }
+                                });
+                            } else {
+                                textArea.appendText(str + "\n"); //выводим строку, что пришла от сервера
+                                //textArea1.appendText(str + "/n"); //выводим строку, что пришла от сервера
+                            }
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
