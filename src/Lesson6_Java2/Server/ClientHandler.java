@@ -81,8 +81,13 @@ public class ClientHandler {
                                 blackList.add(tokens[1]); // добавляем ник в черный список
                                 sendMsg("Вы добавили пользователя "+" в чёрный список!");
                             }
+                            if(str.startsWith("/history")){// вызываем историю
+                                StringBuilder stringBuilder = AuthService.getHistoryChat(); // вызываем метод , который собирает историю
+                                out.writeUTF(stringBuilder.toString()); // отсылаем историю в чат
+                            }
 
                         }else {
+                            AuthService.saveHistory(nick, str); // сохраняем наше сообщение в БД в AuthService
                             serverMain.broadCast(this, nick + ": " + str);//отправляем сообщение все клиентам
                             // System.out.println("Клиент " + str);//выводим данные от клиента
                         }

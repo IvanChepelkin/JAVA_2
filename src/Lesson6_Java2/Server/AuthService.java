@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class AuthService {
     private static Connection connection;
-    private static Statement state;
+    private static Statement state; // переменная для выволнения запросов к SQL базе
 
     // метод подлкючения к базе данных
     public static void connect() throws SQLException {
@@ -59,6 +59,33 @@ String sql = String.format("SELECT nickname, password FROM main\n"+
         }
         return null;
     }
+// метод позволяет сохранять историю, вызов из ClientHandler
+    public static void saveHistory(String login, String msg){
+        String sql =String.format("INSERT INTO history (post, nick)"+
+        "VALUES ('%s', '%s')", msg, login);
+        try {
+            state.execute(sql); // запрос к БД
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+    // метод собирает все сообщения в одну историю
+    public static StringBuilder getHistoryChat(){
+        StringBuilder stringBuilder = new StringBuilder();
+        String sql = String.format("SELECT nick, post from history ORDER BY ID"); // СОРТИРУЕМ ДАННЫЕ ПО ID
+        try {
+            ResultSet rs = state.executeQuery(sql);
+            // заполняем StringBuilder нашими сообщениями из истории
+            while (rs.next()){
+                stringBuilder.append(rs.getString("nick") + " " + rs.getString("post") + "\n");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return stringBuilder;
+    }
+
 
     public static void disconnect(){
         try {

@@ -97,8 +97,10 @@ public  class Controller  {
                             }
                             else {
                                 textArea.appendText(str +"\n");
+                                textArea1.appendText(str + "\n"); //выводим строку, что пришла от сервера
                             }
                         }
+                        getHisory();
                         while (true) { //сокет закроется, когда выйдем из цикла
                             String str = in.readUTF();
                             if (str.equals("/serverClosed")) {
@@ -140,8 +142,16 @@ public  class Controller  {
         }
     }
 
+    private void getHisory() {
+        try {
+            out.writeUTF("/history ");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-   public void sendMsg(){
+
+    public void sendMsg(){
 //       textArea.appendText(textField.getText()+"\n"); //передаем текст  из окна ввода сообщения в обший чат
 //       textField.clear();//очищаем окно ввода сообщений
 //       textField.requestFocus();//текстовый фокус остается на окне ввода сообщений
