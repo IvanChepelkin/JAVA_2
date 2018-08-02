@@ -118,7 +118,7 @@ public  class Controller  {
                                 });
                             } else {
                                 textArea.appendText(str + "\n"); //выводим строку, что пришла от сервера
-                                //textArea1.appendText(str + "/n"); //выводим строку, что пришла от сервера
+                                textArea1.appendText(str + "\n"); //выводим строку, что пришла от сервера
                             }
                         }
                     } catch (IOException e) {

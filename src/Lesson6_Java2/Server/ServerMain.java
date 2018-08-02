@@ -18,6 +18,9 @@ public class  ServerMain {
         Socket socket = null;//инициализируем сокет
         try {
             AuthService.connect(); // подключение к БД
+//            AuthService.addUser("login1","pass1","nick1"); // создаем наших пользователей
+//            AuthService.addUser("login2","pass2","nick2");
+//            AuthService.addUser("login3","pass3","nick3");
             server = new ServerSocket(8189); //создаем сервер
             System.out.println("Сервер запущен!");
             while (true){
